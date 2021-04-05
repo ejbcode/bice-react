@@ -11,7 +11,11 @@ En la raiz del proyecto, ejecutar
 
 Abrir [http://localhost:3000](http://localhost:3000) para verlo en el browser
 
-## Link
+## Demo
+
+Abrir [https://bice-react.netlify.app/](https://bice-react.netlify.app/) para ver el Live Demo
+
+https://bice-react.netlify.app/
 
 ## Conclusión
 
