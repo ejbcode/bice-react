@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from 'axios';
+import React, { useState } from 'react';
+import Card from './components/Card';
+import Form from './components/Form';
+import Loader from './components/Loader';
 
 function App() {
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState();
+  const [id, setId] = useState();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setData();
+    const URL = `https://dn8mlk7hdujby.cloudfront.net/interview/insurance/${id}`;
+
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios(`${URL}`);
+        setData(response.data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  };
+
+  if (error) {
+    return <p>Error:{error.message}</p>;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Form handleSubmit={handleSubmit} setId={setId} />
+      {loading && <Loader />}
+      {data && <Card data={data} />}
     </div>
   );
 }
